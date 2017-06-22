@@ -1,0 +1,80 @@
+﻿@model IEnumerable<LibrarySystem.BL.LibrarySystem.ViewModel.BOOKVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "SaveBook")
+</p>
+
+<div class="form-group">
+   
+    @using(@Html.BeginForm("Search", "BOOK", FormMethod.Post)){
+    
+    @Html.Label("Search", new { @class = "control-label col-md-2" })
+
+    @Html.Editor("ah")
+    <input type="submit" name="sub" value="Search" />
+
+    }
+
+    <input type="submit" name="conf_reserve" value="confirm reserve" disabled />
+</div>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.photo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.numofcopies)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isbn)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.photo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.numofcopies)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isbn)
+            </td>
+            <td>
+                @if(item.numofcopies>0)
+                { 
+                <input type="submit" name="@item.title" value="reserve"  />
+                @Html.ActionLink("Edit", "SaveBook", new { id = item.book_id }) 
+                     
+                @Html.ActionLink("Delete", "Delete", new { id = item.book_id })
+                }
+                else
+                { <br />
+                <input type="submit" name="@item.title" value="reserve" disabled />
+                @Html.ActionLink("Edit", "SaveBook", new { id = item.book_id }) 
+                   
+                @Html.ActionLink("Delete", "Delete", new { id = item.book_id })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
